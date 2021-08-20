@@ -8,7 +8,7 @@ from datasets import MixedDataset
 from models import hmr, SMPL
 from smplify import SMPLify
 from utils.geometry import batch_rodrigues, perspective_projection, estimate_translation
-from utils.renderer import Renderer
+# from utils.renderer import Renderer
 from utils import BaseTrainer
 
 import config
@@ -48,7 +48,7 @@ class Trainer(BaseTrainer):
         self.fits_dict = FitsDict(self.options, self.train_ds)
 
         # Create renderer
-        self.renderer = Renderer(focal_length=self.focal_length, img_res=self.options.img_res, faces=self.smpl.faces)
+        # self.renderer = Renderer(focal_length=self.focal_length, img_res=self.options.img_res, faces=self.smpl.faces)
 
     def finalize(self):
         self.fits_dict.save()
@@ -288,9 +288,9 @@ class Trainer(BaseTrainer):
         opt_vertices = output['opt_vertices']
         pred_cam_t = output['pred_cam_t']
         opt_cam_t = output['opt_cam_t']
-        images_pred = self.renderer.visualize_tb(pred_vertices, pred_cam_t, images)
-        images_opt = self.renderer.visualize_tb(opt_vertices, opt_cam_t, images)
-        self.summary_writer.add_image('pred_shape', images_pred, self.step_count)
-        self.summary_writer.add_image('opt_shape', images_opt, self.step_count)
+        # images_pred = self.renderer.visualize_tb(pred_vertices, pred_cam_t, images)
+        # images_opt = self.renderer.visualize_tb(opt_vertices, opt_cam_t, images)
+        # self.summary_writer.add_image('pred_shape', images_pred, self.step_count)
+        # self.summary_writer.add_image('opt_shape', images_opt, self.step_count)
         for loss_name, val in losses.items():
             self.summary_writer.add_scalar(loss_name, val, self.step_count)
