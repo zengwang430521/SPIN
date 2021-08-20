@@ -32,7 +32,7 @@ DATASET_FILES = [ {'h36m-p1': join(DATASET_NPZ_PATH, 'h36m_valid_protocol1.npz')
                    '3dpw': join(DATASET_NPZ_PATH, '3dpw_test.npz'),
                   },
 
-                  {'h36m': join( 'data/datasets/npz', 'h36m_train_new.npz'),
+                  {'h36m': join('data/datasets/npz', 'h36m_train_new.npz'),
                    # 'h36m': join(DATASET_NPZ_PATH, 'h36m_train.npz'),
                     'lsp-orig': join(DATASET_NPZ_PATH, 'lsp_dataset_original_train.npz'),
                    'mpii': join(DATASET_NPZ_PATH, 'mpii_train.npz'),

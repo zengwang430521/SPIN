@@ -26,6 +26,7 @@ class FitsDict():
                     dict_file = os.path.join(config.STATIC_FITS_DIR, ds_name + '_fits.npy')
                     self.fits_dict[ds_name] = torch.from_numpy(np.load(dict_file))
                 except IOError:
+                    self.fits_dict[ds_name] = torch.zeros(len(ds), 82)
                     print(dict_file+' not exist!')
 
     def save(self):
