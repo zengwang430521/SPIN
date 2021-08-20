@@ -21,7 +21,8 @@ import argparse
 import json
 from collections import namedtuple
 from tqdm import tqdm
-import torchgeometry as tgm
+# import torchgeometry as tgm
+from train.trainer import rotation_matrix_to_angle_axis
 
 import config
 import constants
@@ -137,7 +138,7 @@ def run_evaluation(model, dataset_name, dataset, result_file,
         if save_results:
             rot_pad = torch.tensor([0,0,1], dtype=torch.float32, device=device).view(1,3,1)
             rotmat = torch.cat((pred_rotmat.view(-1, 3, 3), rot_pad.expand(curr_batch_size * 24, -1, -1)), dim=-1)
-            pred_pose = tgm.rotation_matrix_to_angle_axis(rotmat).contiguous().view(-1, 72)
+            pred_pose = rotation_matrix_to_angle_axis(rotmat).contiguous().view(-1, 72)
             smpl_pose[step * batch_size:step * batch_size + curr_batch_size, :] = pred_pose.cpu().numpy()
             smpl_betas[step * batch_size:step * batch_size + curr_batch_size, :]  = pred_betas.cpu().numpy()
             smpl_camera[step * batch_size:step * batch_size + curr_batch_size, :]  = pred_camera.cpu().numpy()
