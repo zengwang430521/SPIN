@@ -119,4 +119,6 @@ data/*
 !data/README.md
 
 # ignore prior.py from smplify-x repo
-smplify/prior.py
+# smplify/prior.py
+
+.idea
