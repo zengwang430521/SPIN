@@ -21,9 +21,12 @@ class FitsDict():
                 dict_file = os.path.join(options.checkpoint_dir, ds_name + '_fits.npy')
                 self.fits_dict[ds_name] = torch.from_numpy(np.load(dict_file))
             except IOError:
-                # Dictionary does not exist, so populate with static fits
-                dict_file = os.path.join(config.STATIC_FITS_DIR, ds_name + '_fits.npy')
-                self.fits_dict[ds_name] = torch.from_numpy(np.load(dict_file))
+                try:
+                    # Dictionary does not exist, so populate with static fits
+                    dict_file = os.path.join(config.STATIC_FITS_DIR, ds_name + '_fits.npy')
+                    self.fits_dict[ds_name] = torch.from_numpy(np.load(dict_file))
+                except IOError:
+                    print(dict_file+' not exist!')
 
     def save(self):
         """ Save dictionary state to disk """
