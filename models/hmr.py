@@ -151,7 +151,7 @@ class HMR(nn.Module):
 
         return pred_rotmat, pred_shape, pred_cam
 
-def hmr(smpl_mean_params, pretrained=True, **kwargs):
+def hmr_old(smpl_mean_params, pretrained=True, **kwargs):
     """ Constructs an HMR model with ResNet50 backbone.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
@@ -162,3 +162,36 @@ def hmr(smpl_mean_params, pretrained=True, **kwargs):
         model.load_state_dict(resnet_imagenet.state_dict(),strict=False)
     return model
 
+
+
+
+import torch
+import torch.nn as nn
+from .resnet import resnet50
+from .smpl_head import HMRHead
+
+
+class HMR_mine(nn.Module):
+
+    def __init__(self, options=None):
+        super().__init__()
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.options = options
+        self.backbone = resnet50(pretrained=True)
+        self.backbone.fc = None
+        self.smpl_head = HMRHead(2048)
+
+    def forward(self, images):
+        feature = self.backbone(images)
+        pred_para = self.smpl_head(feature)
+        pred_rotmat, pred_shape, pred_cam = pred_para
+        return pred_rotmat, pred_shape, pred_cam
+
+
+def hmr(smpl_mean_params, pretrained=True, **kwargs):
+    """ Constructs an HMR model with ResNet50 backbone.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = HMR_mine()
+    return model
