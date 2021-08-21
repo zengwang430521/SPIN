@@ -30,7 +30,7 @@ from models import hmr, SMPL
 from datasets import BaseDataset
 from utils.imutils import uncrop
 from utils.pose_utils import reconstruction_error
-from utils.part_utils import PartRenderer
+# from utils.part_utils import PartRenderer
 
 # Define command-line arguments
 parser = argparse.ArgumentParser()
@@ -62,7 +62,7 @@ def run_evaluation(model, dataset_name, dataset, result_file,
                        gender='female',
                        create_transl=False).to(device)
     
-    renderer = PartRenderer()
+    # renderer = PartRenderer()
     
     # Regressor for H36m joints
     J_regressor = torch.from_numpy(np.load(config.JOINT_REGRESSOR_H36M)).float()
