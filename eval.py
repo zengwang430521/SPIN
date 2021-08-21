@@ -267,7 +267,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     model = hmr(config.SMPL_MEAN_PARAMS)
     checkpoint = torch.load(args.checkpoint)
-    model.load_state_dict(checkpoint['model'], strict=False)
+    # model.load_state_dict(checkpoint['model'], strict=False)
+    model.load_state_dict(checkpoint['model'], strict=True)
     model.eval()
 
     # Setup evaluation dataset
